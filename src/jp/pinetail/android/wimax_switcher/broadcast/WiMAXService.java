@@ -64,6 +64,23 @@ public class WiMAXService extends Service {
                     setWimaxEnabled(getApplicationContext());
                 }
             }
+        } else if (extras.containsKey("screenStatus")) {
+
+            Log.d(TAG, "screenStatus:" + extras.getString("screenStatus") + " status:" + status);
+
+            if (extras.getString("screenStatus").equals("ScreenOn")) {
+                if (app.getWimaxStatus() == STATE_ENABLED) {
+                    setWimaxEnabled(getApplicationContext());
+                }
+                
+            } else if (extras.getString("screenStatus").equals("ScreenOff")) {
+                app.setWimaxStatus(status);
+                
+                // WiMAXがONの場合
+                if (status == STATE_ENABLED) {
+                    setWimaxDisabled(getApplicationContext());
+                }
+            }
         }
 
         stopSelf();

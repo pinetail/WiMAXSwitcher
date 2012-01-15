@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/app_name" >
+
+        <CheckBoxPreference
+            android:key="settings_auto_start"
+            android:summary="端末起動時に自動的にアプリケーションを開始します。"
+            android:title="自動起動" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="WiMAXON/OFF設定" >
+
+        <CheckBoxPreference
+            android:key="settings_wifi"
+            android:summary="Wi-Fi接続時にWiMAXをOFF、Wi-Fi切断時に接続前の状態に復元にします。"
+            android:title="Wi-Fi接続/切断検知" />
+        <CheckBoxPreference
+            android:key="settings_screen"
+            android:summary="スクリーンOFF時にWiMAXをOFF、スクリーンON時に前回の状態に復元にします。"
+            android:title="スクリーンON/OFF検知" />
+        </PreferenceCategory>
+
+</PreferenceScreen>

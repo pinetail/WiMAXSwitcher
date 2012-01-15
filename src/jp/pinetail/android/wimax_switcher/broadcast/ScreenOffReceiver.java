@@ -3,9 +3,8 @@ package jp.pinetail.android.wimax_switcher.broadcast;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ScreenOffReceiver extends BroadcastReceiver {
@@ -18,16 +17,20 @@ public class ScreenOffReceiver extends BroadcastReceiver {
 
         // 画面の電源が入ったらActivityを起動
         if (action.equals(Intent.ACTION_SCREEN_OFF)) {
+
+            SharedPreferences pref = PreferenceManager
+                    .getDefaultSharedPreferences(context);
+
+            boolean screenFlg = pref.getBoolean("settings_screen", false);
+
+            if (screenFlg == false) {
+                return;
+            }
             
-//            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-//            NetworkInfo info = cm.getActiveNetworkInfo();
-//
-//            if (info != null) {
-                // サービス呼び出し(WIFI接続時のオンライン処理)
-                Intent serviceIntent = new Intent(context, WiMAXService.class);
-                serviceIntent.putExtra("screenStatus", "ScreenOff");
-                context.startService(serviceIntent);
-//            }
+            // サービス呼び出し(WIFI接続時のオンライン処理)
+            Intent serviceIntent = new Intent(context, WiMAXService.class);
+            serviceIntent.putExtra("screenStatus", "ScreenOff");
+            context.startService(serviceIntent);
         }
     }
 

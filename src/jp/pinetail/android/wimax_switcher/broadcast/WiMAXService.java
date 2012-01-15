@@ -3,7 +3,6 @@ package jp.pinetail.android.wimax_switcher.broadcast;
 import java.lang.reflect.Method;
 
 import jp.pinetail.android.wimax_switcher.WiMAXApplication;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +14,9 @@ import android.widget.Toast;
 public class WiMAXService extends Service {
     static final String TAG = "WiMAXService";
 
-    private static final int BUTTON_WIMAX = 0;
-
-    private static final int STATE_DISABLED = 0;
-    private static final int STATE_ENABLED = 1;
-    private static final int STATE_INTERMEDIATE = 2;
+    public static final int STATE_DISABLED = 0;
+    public static final int STATE_ENABLED = 1;
+    public static final int STATE_INTERMEDIATE = 2;
 
     private static final String CONTEXT_WIMAX_SERVICE = "wimax";
 
@@ -54,13 +51,13 @@ public class WiMAXService extends Service {
 
             // WiFiに接続 and WiMAX ON
             if (nwStatus == true) {
-                app.setWimaxStatus(status);
+                app.setWimaxWifiStatus(status);
                 if (status == STATE_ENABLED) {
                     setWimaxDisabled(getApplicationContext());
                 }
             } else if (nwStatus == false) {
                 if (status == STATE_DISABLED
-                        && app.getWimaxStatus() == STATE_ENABLED) {
+                        && app.getWimaxWifiStatus() == STATE_ENABLED) {
                     setWimaxEnabled(getApplicationContext());
                 }
             }
@@ -69,12 +66,12 @@ public class WiMAXService extends Service {
             Log.d(TAG, "screenStatus:" + extras.getString("screenStatus") + " status:" + status);
 
             if (extras.getString("screenStatus").equals("ScreenOn")) {
-                if (app.getWimaxStatus() == STATE_ENABLED) {
+                if (app.getWimaxScreenStatus() == STATE_ENABLED) {
                     setWimaxEnabled(getApplicationContext());
                 }
                 
             } else if (extras.getString("screenStatus").equals("ScreenOff")) {
-                app.setWimaxStatus(status);
+                app.setWimaxScreenStatus(status);
                 
                 // WiMAXがONの場合
                 if (status == STATE_ENABLED) {
@@ -143,33 +140,8 @@ public class WiMAXService extends Service {
                     "setWimaxEnabled", new Class[] { Boolean.TYPE });
 
             if (wimaxState == STATE_ENABLED) {
-                Toast.makeText(context, "enabled", Toast.LENGTH_SHORT).show();
                 setWimaxEnabled.invoke(wimaxManager,
                         new Object[] { Boolean.FALSE });
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "could not toggle wimax state", e);
-            return;
-        }
-    }
-
-    private void changeStatus(Context context) {
-        int wimaxState = getWimaxState(context);
-
-        try {
-            Object wimaxManager = context
-                    .getSystemService(CONTEXT_WIMAX_SERVICE);
-            Method setWimaxEnabled = wimaxManager.getClass().getMethod(
-                    "setWimaxEnabled", new Class[] { Boolean.TYPE });
-
-            if (wimaxState == STATE_ENABLED) {
-                Toast.makeText(context, "enabled", Toast.LENGTH_SHORT).show();
-                setWimaxEnabled.invoke(wimaxManager,
-                        new Object[] { Boolean.FALSE });
-            } else if (wimaxState == STATE_DISABLED) {
-                Toast.makeText(context, "disabled", Toast.LENGTH_LONG).show();
-                setWimaxEnabled.invoke(wimaxManager,
-                        new Object[] { Boolean.TRUE });
             }
         } catch (Exception e) {
             Log.e(TAG, "could not toggle wimax state", e);

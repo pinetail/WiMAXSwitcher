@@ -19,12 +19,18 @@ public class WiMAXSwitcherActivity extends PreferenceActivity implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref);
 
+        // スクリーン設定の確認
         checkScreenSettings();
+        
+        checkNotificationSettings();
 
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
     }
 
+    /**
+     * スクリーン設定の確認
+     */
     private void checkScreenSettings() {
 
         CheckBoxPreference pref = (CheckBoxPreference) findPreference("settings_screen");
@@ -34,22 +40,34 @@ public class WiMAXSwitcherActivity extends PreferenceActivity implements
         } else {
             unregisterScreenReceiver();
         }
+    }
 
+    /**
+     * 通知バー設定の確認
+     */
+    private void checkNotificationSettings() {
+        CheckBoxPreference pref = (CheckBoxPreference) getPreferenceScreen()
+                .findPreference("settings_notify");
+
+        if (pref != null && pref.isChecked()) {
+            WiMAXNotificationManager.notify(this);
+        } else {
+            WiMAXNotificationManager.cancel(this);
+        }
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
 
+        // スクリーンON/OFF検知が変更された場合
         if (key.equals("settings_screen")) {
-            CheckBoxPreference pref = (CheckBoxPreference) getPreferenceScreen()
-                    .findPreference(key);
+            checkScreenSettings();
+        }
 
-            if (pref.isChecked()) {
-                registerScreenReceiver();
-            } else {
-                unregisterScreenReceiver();
-            }
+        // 通知バーに表示が変更された場合
+        if (key.equals("settings_notify")) {
+            checkNotificationSettings();
         }
     }
 

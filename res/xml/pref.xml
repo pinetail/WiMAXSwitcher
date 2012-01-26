@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <PreferenceCategory android:title="@string/app_name" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="アプリ全般の設定">
 
         <CheckBoxPreference
-            android:key="settings_auto_start"
-            android:summary="端末起動時に自動的にアプリケーションを開始します。"
-            android:title="自動起動" />
+            android:key="settings_notify"
+            android:summary="通知バーに設定状態を表示します。"
+            android:title="通知バーに表示"
+            android:defaultValue="true" />
     </PreferenceCategory>
-
-    <PreferenceCategory android:title="WiMAXON/OFF設定" >
+    <PreferenceCategory android:title="WiMAXON/OFF設定">
 
         <CheckBoxPreference
             android:key="settings_wifi"
@@ -19,6 +18,6 @@
             android:key="settings_screen"
             android:summary="スクリーンOFF時にWiMAXをOFF、スクリーンON時に前回の状態に復元にします。"
             android:title="スクリーンON/OFF検知" />
-        </PreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

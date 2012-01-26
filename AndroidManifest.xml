@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.pinetail.android.wimax_switcher"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0">
 
     <uses-sdk android:minSdkVersion="8" />
 
@@ -14,11 +15,11 @@
     <application
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:name=".WiMAXApplication" >
+        android:name=".WiMAXApplication">
         <activity
             android:label="@string/app_name"
-            android:name=".WiMAXSwitcherActivity" >
-            <intent-filter >
+            android:name=".WiMAXSwitcherActivity">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,16 +28,16 @@
 
         <receiver
             android:enabled="true"
-            android:name=".broadcast.WiFiReceiver" >
-            <intent-filter >
-                <action android:name="android.net.wifi.STATE_CHANGE" >
+            android:name=".broadcast.WiFiReceiver">
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE">
                 </action>
             </intent-filter>
         </receiver>
         <receiver
             android:name=".broadcast.BootCompletedReceiver"
-            android:enabled="true" >
-            <intent-filter >
+            android:enabled="true">
+            <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

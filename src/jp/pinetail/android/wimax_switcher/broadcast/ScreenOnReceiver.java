@@ -7,6 +7,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+/**
+ * スクリーンON時のレシーバー
+ * 
+ * @author Shinichi Matsuo
+ *
+ */
 public class ScreenOnReceiver extends BroadcastReceiver {
 
     @Override
@@ -15,7 +21,7 @@ public class ScreenOnReceiver extends BroadcastReceiver {
 
         Log.d("hoge", "screenOn");
 
-        // 画面の電源が入ったらActivityを起動
+        // スクリーンがONになった場合
         if (action.equals(Intent.ACTION_SCREEN_ON)) {
             SharedPreferences pref = PreferenceManager
                     .getDefaultSharedPreferences(context);

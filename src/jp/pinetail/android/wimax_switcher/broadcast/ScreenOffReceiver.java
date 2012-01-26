@@ -7,6 +7,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+/**
+ * スクリーンOFF時のレシーバー
+ * 
+ * @author Shinichi Matsuo
+ *
+ */
 public class ScreenOffReceiver extends BroadcastReceiver {
 
     @Override
@@ -15,7 +21,7 @@ public class ScreenOffReceiver extends BroadcastReceiver {
 
         Log.d("hoge", "screenOff");
 
-        // 画面の電源が入ったらActivityを起動
+        // スクリーンがOFFになった場合
         if (action.equals(Intent.ACTION_SCREEN_OFF)) {
 
             SharedPreferences pref = PreferenceManager

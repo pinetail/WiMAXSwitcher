@@ -9,10 +9,18 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+/**
+ * WiFiレシーバー
+ * 
+ * @author Shinichi Matsuo
+ * 
+ */
 public class WiFiReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        // ネットワークの状態が変更になった場合
         if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
 
             SharedPreferences pref = PreferenceManager

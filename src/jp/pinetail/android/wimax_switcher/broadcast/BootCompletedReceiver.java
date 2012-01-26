@@ -6,6 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+/**
+ * 端末起動時のレシーバー
+ * 
+ * @author Shinichi Matsuo
+ *
+ */
 public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override

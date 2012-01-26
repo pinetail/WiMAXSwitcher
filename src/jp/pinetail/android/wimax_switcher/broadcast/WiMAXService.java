@@ -9,8 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
+/**
+ * WiMAXサービス
+ * @author Shinichi Matsuo
+ *
+ */
 public class WiMAXService extends Service {
     static final String TAG = "WiMAXService";
 
@@ -51,13 +55,13 @@ public class WiMAXService extends Service {
 
             // WiFiに接続 and WiMAX ON
             if (nwStatus == true) {
-                app.setWimaxWifiStatus(status);
+                app.setWifiStatus(status);
                 if (status == STATE_ENABLED) {
                     setWimaxDisabled(getApplicationContext());
                 }
             } else if (nwStatus == false) {
                 if (status == STATE_DISABLED
-                        && app.getWimaxWifiStatus() == STATE_ENABLED) {
+                        && app.getWifiStatus() == STATE_ENABLED) {
                     setWimaxEnabled(getApplicationContext());
                 }
             }
@@ -66,12 +70,12 @@ public class WiMAXService extends Service {
             Log.d(TAG, "screenStatus:" + extras.getString("screenStatus") + " status:" + status);
 
             if (extras.getString("screenStatus").equals("ScreenOn")) {
-                if (app.getWimaxScreenStatus() == STATE_ENABLED) {
+                if (app.getScreenStatus() == STATE_ENABLED) {
                     setWimaxEnabled(getApplicationContext());
                 }
                 
             } else if (extras.getString("screenStatus").equals("ScreenOff")) {
-                app.setWimaxScreenStatus(status);
+                app.setScreenStatus(status);
                 
                 // WiMAXがONの場合
                 if (status == STATE_ENABLED) {
@@ -83,6 +87,12 @@ public class WiMAXService extends Service {
         stopSelf();
     }
 
+    /**
+     * WiMAXの状態取得メソッド
+     * 
+     * @param context
+     * @return
+     */
     private static int getWimaxState(Context context) {
         int wimaxState = WIMAX_STATE_DISABLED;
 
@@ -109,6 +119,11 @@ public class WiMAXService extends Service {
         }
     }
 
+    /**
+     * WiMAXを有効にするメソッド
+     * 
+     * @param context
+     */
     private void setWimaxEnabled(Context context) {
 
         int wimaxState = getWimaxState(context);
@@ -130,6 +145,11 @@ public class WiMAXService extends Service {
 
     }
 
+    /**
+     * WiMAXを無効にするメソッド
+     * 
+     * @param context
+     */
     private void setWimaxDisabled(Context context) {
         int wimaxState = getWimaxState(context);
 
